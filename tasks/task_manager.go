@@ -4,21 +4,29 @@ import "fmt"
 
 var tasks []Task
 
-// TODO: implement AddTask to append a task to the tasks slice
 func AddTask(name string, priority int) (Task, error) {
-	// Your code here
-	return Task{}, nil
+	task := Task{Name: name, Priority: priority}
+	tasks = append(tasks, task)
+	return task, nil
 }
 
-// TODO: implement MarkTaskDone to mark a task as done using its index
 func MarkTaskDone(index int) error {
-	// Your code here
+	err := validateIndex(index)
+	if err != nil {
+		return err
+	}
+	
+	tasks[index].MarkDone()
 	return nil
 }
 
-// TODO: implement RemoveTask to safely remove a task from the slice
 func RemoveTask(index int) error {
-	// Your code here
+	err := validateIndex(index)
+	if err != nil {
+		return err
+	}
+
+	tasks = append(tasks[:index], tasks[index+1:]...)
 	return nil
 }
 

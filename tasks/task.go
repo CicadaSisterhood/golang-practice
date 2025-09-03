@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 // Task represents a to-do item
 type Task struct {
     Name     string
@@ -19,13 +21,16 @@ type TimedTask struct {
     DueDate string
 }
 
-// TODO: implement MarkDone so it updates the task's status
 func (t *Task) MarkDone() {
-    // Your code here
+    t.Done = true
 }
 
-// TODO: implement Summary to return a string like "[❌] Name (Priority X)"
 func (t *Task) Summary() string {
-    // Your code here
-    return ""
+	var status string
+	if t.Done {
+		status = "✅"
+	} else {
+		status = "❌"
+	}
+	return fmt.Sprintf("[%s] %s (Priority %d)", status, t.Name, t.Priority)
 }
