@@ -19,7 +19,11 @@ func main() {
     text := scanner.Text()
 
     // Call your word frequency function
-    freqMap := wordFrequency(text)
+    freqMap, err := wordFrequency(text)
+    if err != nil {
+        fmt.Println("Error:", err)
+        return
+    }
 
     // Print the results
     for word, count := range freqMap {
@@ -28,7 +32,7 @@ func main() {
 }
 
 // wordFrequency takes a string and returns a map of word -> count
-func wordFrequency(text string) map[string]int {
+func wordFrequency(text string) (map[string]int, error) {
     freq := make(map[string]int)
     
     // Find all word matches
@@ -41,5 +45,5 @@ func wordFrequency(text string) map[string]int {
         }
     }
 
-    return freq
+    return freq, nil
 }

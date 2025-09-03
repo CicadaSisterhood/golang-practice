@@ -36,9 +36,27 @@ func TestWordFrequencyWithPunctuation(t *testing.T) {
     }
 
     for _, test := range tests {
-        got := wordFrequency(test.input)
+        got, _ := wordFrequency(test.input)
         if !reflect.DeepEqual(got, test.expected) {
             t.Errorf("wordFrequency(%q) = %v; want %v", test.input, got, test.expected)
+        }
+    }
+}
+
+func TestWordFrequencyErrors(t *testing.T) {
+    testCases := []struct {
+        input       string
+        description string
+    }{
+        {"", "empty string"},
+        {"   ", "whitespace only"},
+        {"1234---", "no letters, only numbers/punctuation"},
+    }
+
+    for _, tc := range testCases {
+        _, err := wordFrequency(tc.input)
+        if err == nil {
+            t.Errorf("Expected error for %s, got nil", tc.description)
         }
     }
 }
