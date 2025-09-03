@@ -1,13 +1,18 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"strings"
 )
 
 func main() {
-    // Hardcoded input string
-    text := "the cat sat on the mat"
+    fmt.Println("Enter text:")
+
+    scanner := bufio.NewScanner(os.Stdin)
+    scanner.Scan()
+    text := scanner.Text()
 
     // Call your word frequency function
     freqMap := wordFrequency(text)
