@@ -4,8 +4,12 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 )
+
+var wordRegexp = regexp.MustCompile(`\p{L}+\p{L}*`)
+
 
 func main() {
     fmt.Println("Enter text:")
@@ -25,12 +29,16 @@ func main() {
 
 // wordFrequency takes a string and returns a map of word -> count
 func wordFrequency(text string) map[string]int {
-    text = strings.ToLower(text)
-    words := strings.Fields(text)
     freq := make(map[string]int)
+    
+    // Find all word matches
+    words := wordRegexp.FindAllString(text, -1)
 
     for _, word := range words {
-        freq[word]++
+        cleaned := strings.ToLower(word)
+        if cleaned != ""{
+            freq[cleaned]++
+        }
     }
 
     return freq
