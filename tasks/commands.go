@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -15,18 +16,47 @@ func handleCommand(input string) {
     args := parts[1:]
 	_ = args
 
+	
     switch command {
     case "add":
-        // TODO: parse args and call AddTask
-        fmt.Println("Add task not implemented yet")
+        name := args[0]
+		priority, err := strconv.Atoi(args[1])
+		if err != nil{
+			fmt.Println("Error: second argument must be an integer")
+			break
+		}
+		task, err := AddTask(name, priority)
+		if err != nil {
+			fmt.Printf("Error: %s", err)
+			break
+		}
+        fmt.Printf("Added task: %s (Priority %d)", task.Name, task.Priority)
     case "list":
         listTasks() // already implemented as a helper in task_manager.go
     case "done":
-        // TODO: parse args and call MarkTaskDone
-        fmt.Println("Mark task done not implemented yet")
+        index, err := strconv.Atoi(args[0])
+		if err != nil {
+			fmt.Println("Error: argument must be an integer")
+			break
+		}
+		err = MarkTaskDone(index)
+		if err != nil {
+			fmt.Printf("Error: %s", err)
+			break
+		}
+        fmt.Println("Task marked complete")
     case "remove":
-        // TODO: parse args and call RemoveTask
-        fmt.Println("Remove task not implemented yet")
+        index, err := strconv.Atoi(args[0])
+		if err != nil {
+			fmt.Println("Error: argument must be an integer")
+			break
+		}
+		err = RemoveTask(index)
+		if err != nil {
+			fmt.Printf("Error: %s", err)
+			break
+		}
+        fmt.Println("Task removed")
     default:
         fmt.Println("Unknown command:", command)
     }
